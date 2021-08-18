@@ -11,14 +11,21 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 // Images
 import smiley from '../../public/images/smiley.png';
-import theme from '../styles/mui/theme';
+// Utils
+import { Color } from '../theme/theme';
+
 const IndexPage: FC = () => {
   return (
     <Box>
       <Header />
       <Container maxWidth="lg">
-        <Box mb={2} mt={3} pt={2}>
-          <Grid container alignContent="center" alignItems="center" spacing={1}>
+        <Box mb={2} minHeight="400px" mt={3} pt={4}>
+          <Grid
+            container
+            alignItems="center"
+            justifyContent="center"
+            spacing={1}
+          >
             <Grid item xs={12}>
               <Box
                 marginLeft="auto"
@@ -31,9 +38,15 @@ const IndexPage: FC = () => {
               </Box>
             </Grid>
             <Grid item xs={12}>
-              <Box textAlign="center">
-                <Typography>Hooray! You’ve cleared your to-do list</Typography>
-                <Typography>{`Tap '+' to create a new task`}</Typography>
+              <Box color={Color.ASH}>
+                <Typography align="center">
+                  Hooray!
+                  <br />
+                  You’ve cleared your to-do list
+                </Typography>
+                <Box mt={4}>
+                  <Typography align="center">{`Tap '+' to create a new task`}</Typography>
+                </Box>
               </Box>
             </Grid>
           </Grid>

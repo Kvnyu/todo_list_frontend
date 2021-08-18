@@ -1,7 +1,12 @@
 import React, { FC } from 'react';
 // MUI
-import { Box, Grid, Typography } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import Container from '@material-ui/core/Container';
+// FUI
+import Typography from '../theme/overrides/Typography';
+// Styles
+import { Color } from '../theme/theme';
+
 const Header: FC = () => {
   return (
     <Container disableGutters maxWidth="lg">
@@ -15,18 +20,9 @@ const Header: FC = () => {
         }}
         textAlign="center"
       >
-        <Grid
-          container
-          alignContent="center"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <Grid item>
-            <Typography color="primary" variant="h3">
-              My To-do List
-            </Typography>
-          </Grid>
-        </Grid>
+        <Typography customColor={Color.FRESH} variant="h4">
+          My To-do List
+        </Typography>
       </Box>
     </Container>
   );

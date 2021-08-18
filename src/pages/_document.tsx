@@ -4,7 +4,7 @@ import Document, { Head, Html, Main, NextScript } from 'next/document';
 // MUI
 import { ServerStyleSheets } from '@material-ui/core/styles';
 // Styles
-import theme from '../styles/mui/theme';
+import theme from '../theme/theme';
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx) {
