@@ -1,17 +1,21 @@
 import React from 'react';
 // Modules
-import Document, { Head, Html, Main, NextScript } from 'next/document';
+import Document, {
+  DocumentContext,
+  Head,
+  Html,
+  Main,
+  NextScript,
+} from 'next/document';
 // MUI
 import { ServerStyleSheets } from '@material-ui/core/styles';
 // Styles
 import theme from '../theme/theme';
 
-export default class MyDocument extends Document {
-  static async getInitialProps(ctx) {
+class MyDocument extends Document {
+  static async getInitialProps(ctx: DocumentContext) {
     const initialProps = await Document.getInitialProps(ctx);
-    let props = { ...initialProps };
-
-    return props;
+    return initialProps;
   }
 
   render() {
@@ -28,6 +32,7 @@ export default class MyDocument extends Document {
     );
   }
 }
+
 MyDocument.getInitialProps = async (ctx) => {
   const sheets = new ServerStyleSheets();
   const originalRenderPage = ctx.renderPage;
@@ -48,3 +53,5 @@ MyDocument.getInitialProps = async (ctx) => {
     ],
   };
 };
+
+export default MyDocument;

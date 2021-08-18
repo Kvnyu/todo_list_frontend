@@ -1,6 +1,7 @@
 import { createTheme, responsiveFontSizes } from '@material-ui/core/styles';
 /* eslint-disable no-unused-vars */
 // I copied the default Colors, Font, and Shadow only as its tedious!
+
 export enum Color {
   ASH = '#777777',
   BLACK = '#000000',

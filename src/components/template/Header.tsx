@@ -18,6 +18,7 @@ const Header: FC<Props> = ({ pageName }) => {
         bgcolor="background.paper"
         boxShadow={1}
         fontSize="24px"
+        minHeight="64px"
         py={2}
         sx={{
           borderRadius: '0px 0px 8px 8px',

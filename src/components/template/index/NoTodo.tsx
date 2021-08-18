@@ -14,7 +14,7 @@ import { Color } from '../../../theme/theme';
 const NoTodo: FC = () => {
   return (
     <Container maxWidth="lg">
-      <Box mb={2} minHeight="400px" mt={3} pt={4}>
+      <Box mb={2} mt={3} pt={4}>
         <Grid container alignItems="center" justifyContent="center" spacing={1}>
           <Grid item xs={12}>
             <Box

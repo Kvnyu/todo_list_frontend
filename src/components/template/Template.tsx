@@ -1,7 +1,7 @@
 import Box from '@material-ui/core/Box';
 import React, { FC, ReactNode } from 'react';
 // Components
-import Footer from './Footer';
+import Footer, { footerHeight } from './Footer';
 import Header from './Header';
 
 interface Props {
@@ -11,11 +11,13 @@ interface Props {
 
 const Template: FC<Props> = ({ children, pageName }) => {
   return (
-    <>
-      <Header pageName={pageName} />
-      <Box mb="168px">{children}</Box>
+    <Box minHeight="100vh" position="relative">
+      <Box pb={footerHeight}>
+        <Header pageName={pageName} />
+        <Box>{children}</Box>
+      </Box>
       <Footer />
-    </>
+    </Box>
   );
 };
 
