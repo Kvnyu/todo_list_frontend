@@ -5,7 +5,7 @@ import Image from 'next/Image';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 // Images
-import trees from '../../public/images/trees.png';
+import trees from '../../../public/images/trees.png';
 
 const Footer: FC = () => {
   return (
@@ -16,7 +16,7 @@ const Footer: FC = () => {
         bottom: 0,
         height: '168px',
         left: '50%',
-        position: 'fixed',
+        position: 'absolute',
         right: 0,
         width: '100%',
       }}

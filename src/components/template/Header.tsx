@@ -3,11 +3,15 @@ import React, { FC } from 'react';
 import { Box } from '@material-ui/core';
 import Container from '@material-ui/core/Container';
 // FUI
-import Typography from '../theme/overrides/Typography';
+import Typography from '../../theme/overrides/Typography';
 // Styles
-import { Color } from '../theme/theme';
+import { Color } from '../../theme/theme';
 
-const Header: FC = () => {
+interface Props {
+  pageName: string;
+}
+
+const Header: FC<Props> = ({ pageName }) => {
   return (
     <Container disableGutters maxWidth="lg">
       <Box
@@ -21,7 +25,7 @@ const Header: FC = () => {
         textAlign="center"
       >
         <Typography customColor={Color.FRESH} variant="h4">
-          My To-do List
+          {pageName}
         </Typography>
       </Box>
     </Container>
