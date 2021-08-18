@@ -58,7 +58,7 @@ enum Font {
   SERIF = "'orpheuspro', serif",
 }
 
-enum Shadow {
+export enum Shadow {
   DEPTH_00 = '0px 1px 1px rgba(0, 0, 0, 0.05), 0px 0px 8px rgba(0, 0, 0, 0.05)',
   DEPTH_01 = '0px 0px 1px rgba(0, 0, 0, 0.1), 0px 2px 16px rgba(0, 0, 0, 0.08)',
   DEPTH_02 = '0px 0px 1px rgba(0, 0, 0, 0.1), 0px 4px 16px rgba(0, 0, 0, 0.1)',

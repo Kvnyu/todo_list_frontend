@@ -9,22 +9,46 @@ import Document, {
 } from 'next/document';
 // MUI
 import { ServerStyleSheets } from '@material-ui/core/styles';
-// Styles
-import theme from '../theme/theme';
 
+// Document renders only on the serverside
 class MyDocument extends Document {
-  static async getInitialProps(ctx: DocumentContext) {
+  // This function gets called whenever you call getInitialProps in a page
+  static getInitialProps = async (ctx: DocumentContext) => {
+    const sheets = new ServerStyleSheets();
+    const originalRenderPage = ctx.renderPage;
+
+    // sheets.collect wraps App inside a StylesProvider and ThemeProvider
+    ctx.renderPage = () =>
+      originalRenderPage({
+        enhanceApp: (App) => (props) => sheets.collect(<App {...props} />),
+      });
+
+    // This calls the getInitialProps function for a particular page
+    // For example if we are on the IndexPage, IndexPage.getInitialProps(ctx) will be called here
     const initialProps = await Document.getInitialProps(ctx);
-    return initialProps;
-  }
+
+    return {
+      ...initialProps,
+      // Styles fragment is rendered after the app and register rendering finish.
+      styles: [
+        ...React.Children.toArray(initialProps.styles),
+        sheets.getStyleElement(),
+      ],
+    };
+  };
 
   render() {
     return (
       <Html>
         <Head>
-          <meta content={theme.palette.primary.main} name="theme-color" />
+          <link
+            href="/images/favicon.png"
+            rel="shortcut icon"
+            type="image/png"
+          />
         </Head>
         <body>
+          {/* TODO: What do these two components do ? NextScript seems to load Javascript */}
           <Main />
           <NextScript />
         </body>
@@ -32,26 +56,4 @@ class MyDocument extends Document {
     );
   }
 }
-
-MyDocument.getInitialProps = async (ctx) => {
-  const sheets = new ServerStyleSheets();
-  const originalRenderPage = ctx.renderPage;
-
-  ctx.renderPage = () =>
-    originalRenderPage({
-      enhanceApp: (App) => (props) => sheets.collect(<App {...props} />),
-    });
-
-  const initialProps = await Document.getInitialProps(ctx);
-
-  return {
-    ...initialProps,
-    // Styles fragment is rendered after the app and register rendering finish.
-    styles: [
-      ...React.Children.toArray(initialProps.styles),
-      sheets.getStyleElement(),
-    ],
-  };
-};
-
 export default MyDocument;

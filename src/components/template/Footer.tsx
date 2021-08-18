@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 // MUI
 import Box from '@material-ui/core/Box';
 
-export const footerHeight = '168px';
+export const footerHeight = '136px';
 
 const Footer: FC = () => {
   return (
