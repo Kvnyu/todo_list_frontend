@@ -25,7 +25,7 @@ const Header: FC<Props> = ({ pageName }) => {
         }}
         textAlign="center"
       >
-        <Typography customColor={Color.PALE_BLUE_DARKEST} variant="h4">
+        <Typography customColor={Color.FRESH} variant="h4">
           {pageName}
         </Typography>
       </Box>

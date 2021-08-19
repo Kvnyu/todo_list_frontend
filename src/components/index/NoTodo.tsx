@@ -7,9 +7,9 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 // Images
-import smiley from '../../../../public/images/smiley.png';
+import smiley from '../../../public/images/smiley.png';
 // Utils
-import { Color } from '../../../theme/theme';
+import { Color } from '../../theme/theme';
 
 const NoTodo: FC = () => {
   return (
