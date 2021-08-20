@@ -10,7 +10,8 @@ import Typography from '../../theme/overrides/Typography';
 // Types
 import { Item } from '../../lib/types/TodoTypes';
 // Styles
-import { Shadow } from '../../theme/theme';
+import { Color, Shadow } from '../../theme/theme';
+// Lib
 import paths from '../../lib/paths';
 
 interface Props {
@@ -26,7 +27,12 @@ const TodoListView: FC<Props> = ({ items, handleCheckboxClick }) => {
         {items.map((item: Item) => {
           return (
             <Grid key={item.id} item xs={12}>
-              <Box borderRadius={8} boxShadow={Shadow.DEPTH_01} px={1}>
+              <Box
+                bgcolor={Color.WHITE}
+                borderRadius={8}
+                boxShadow={Shadow.DEPTH_01}
+                px={1}
+              >
                 <Grid container alignItems="center">
                   <Grid item>
                     <Box py={3}>
@@ -39,9 +45,11 @@ const TodoListView: FC<Props> = ({ items, handleCheckboxClick }) => {
                     </Box>
                   </Grid>
                   <Grid item xs>
-                    <Link href={paths.update.href(item.id)}>
+                    <Link passHref href={paths.view.href(item.id)}>
                       <Box py={3} style={{ cursor: 'pointer' }} width="100%">
-                        <Typography>{item.title}</Typography>
+                        <Typography customColor={Color.JET}>
+                          {item.title}
+                        </Typography>
                       </Box>
                     </Link>
                   </Grid>

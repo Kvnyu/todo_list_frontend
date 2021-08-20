@@ -3,7 +3,6 @@ import React from 'react';
 import { NextPage } from 'next';
 // Components
 import Loading from '../components/template/Loading';
-import NoTodo from '../components/index/NoTodo';
 import Template from '../components/template/Template';
 import TodoListController from '../components/index/TodoListController';
 // GraphQL
@@ -20,17 +19,17 @@ interface Props {
 
 // TODO: Move these out
 const IndexPage: NextPage<Props> = () => {
-  const { loading, error, data } = useQuery(TodoItemsQuery);
+  const { loading, data } = useQuery(TodoItemsQuery);
   const renderContent = () => {
     if (loading) {
       return <Loading />;
     }
 
-    if (data && data.todoItems && data.todoItems.length !== 0) {
+    if (data && data.todoItems) {
       return <TodoListController items={data.todoItems} />;
     }
 
-    return <NoTodo />;
+    return <TodoListController items={[]} />;
   };
 
   return <Template pageName="My To-do List">{renderContent}</Template>;

@@ -13,10 +13,10 @@ interface Props {
 
 const Header: FC<Props> = ({ pageName }) => {
   return (
-    <Container disableGutters maxWidth="lg">
+    <Container disableGutters maxWidth="md">
       <Box
         bgcolor="background.paper"
-        boxShadow={1}
+        boxShadow={2}
         fontSize="24px"
         minHeight="64px"
         py={2}

@@ -2,11 +2,12 @@ import React, { ChangeEvent, FC, useState } from 'react';
 // Hooks
 import { useMutation } from '@apollo/client';
 // MUI
-import { Fab, IconButton, Link, Tab, Tabs } from '@material-ui/core';
+import { Fab, Link, Tab, Tabs } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 // Components
+import NoTodo from './NoTodo';
 import TodoListView from './TodoListView';
 // GraphQL
 import TodoItemsQuery from '../../lib/graphql/query/TodoItemsQuery.graphql';
@@ -16,16 +17,14 @@ import UpdateTodoItemStatusMutation, {
 } from '../../lib/graphql/mutation/UpdateTodoItemStatusMutation.graphql';
 // Types
 import { Item } from '../../lib/types/TodoTypes';
-import Typography from '../../theme/overrides/Typography';
 // Lib
-import NoTodo from './NoTodo';
 import paths from '../../lib/paths';
 
 interface Props {
   items: Item[];
 }
 const TodoList: FC<Props> = ({ items }) => {
-  const [updateTodo, { data, loading, error }] = useMutation<
+  const [updateTodo] = useMutation<
     UpdateTodoItemStatusMutationData,
     UpdateTodoItemStatusMutationVariables
   >(UpdateTodoItemStatusMutation, {
@@ -88,8 +87,8 @@ const TodoList: FC<Props> = ({ items }) => {
         />
       );
     }
-    // Pending tab
 
+    // Pending tab
     if (pendingItems.length == 0) {
       return <NoTodo />;
     }
@@ -102,30 +101,32 @@ const TodoList: FC<Props> = ({ items }) => {
   };
 
   return (
-    <Container maxWidth="md">
-      <Box display="flex" justifyContent="center" m={2}>
-        <Tabs
-          aria-label="tabs"
-          indicatorColor="primary"
-          textColor="primary"
-          value={tabIndex}
-          onChange={handleTabChange}
-        >
-          <Tab label="Pending" />
-          <Tab label="Completed" />
-        </Tabs>
-      </Box>
-      <Box flex="auto" mt={4}>
-        {renderItemList()}
-      </Box>
-      <Box display="flex" justifyContent="flex-end" mt={4}>
-        <Link href={paths.create.href}>
-          <Fab aria-label="add" color="primary">
-            <AddIcon />
-          </Fab>
-        </Link>
-      </Box>
-    </Container>
+    <Box minHeight="">
+      <Container maxWidth="md">
+        <Box display="flex" justifyContent="center" m={2}>
+          <Tabs
+            aria-label="tabs"
+            indicatorColor="primary"
+            textColor="primary"
+            value={tabIndex}
+            onChange={handleTabChange}
+          >
+            <Tab label="Pending" />
+            <Tab label="Completed" />
+          </Tabs>
+        </Box>
+        <Box flex="auto" mt={4}>
+          {renderItemList()}
+        </Box>
+        <Box display="flex" justifyContent="flex-end" my={4}>
+          <Link href={paths.create.href}>
+            <Fab aria-label="add" color="primary">
+              <AddIcon />
+            </Fab>
+          </Link>
+        </Box>
+      </Container>
+    </Box>
   );
 };
 export default TodoList;

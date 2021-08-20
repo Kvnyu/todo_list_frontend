@@ -8,6 +8,9 @@ const paths = {
   update: {
     href: (id: string) => `/update/${id}`,
   },
+  view: {
+    href: (id: string) => `/view/${id}`,
+  },
 };
 
 export default paths;

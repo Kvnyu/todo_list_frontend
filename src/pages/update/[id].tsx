@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 // Modules
-import { useMutation, useQuery } from '@apollo/client/react';
+import { useMutation } from '@apollo/client/react';
 import { useRouter } from 'next/router';
 // Hooks
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
+import { GetServerSideProps, NextPage } from 'next';
 import { yupResolver } from '@hookform/resolvers/yup';
 // Modules
 import * as yup from 'yup';
+import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
 // MUI
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
@@ -15,7 +17,6 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 // Components
-import Loading from '../../components/template/Loading';
 import Template from '../../components/template/Template';
 // FUI
 import Typography from '../../theme/overrides/Typography';
@@ -28,53 +29,44 @@ import TodoItemQuery, {
   TodoItemQueryData,
   TodoItemQueryVariables,
 } from '../../lib/graphql/query/TodoItemQuery.graphql';
+import TodoItemsQuery from '../../lib/graphql/query/TodoItemsQuery.graphql';
 import UpdateTodoItemMutation, {
   UpdateTodoItemMutationData,
   UpdateTodoItemMutationVariables,
 } from '../../lib/graphql/mutation/UpdateTodoItemMutation.graphql';
 // Styles
 import { Color } from '../../theme/theme';
-// Lib
 import TextField from '../../theme/overrides/TextField';
-import TodoItemsQuery from '../../lib/graphql/query/TodoItemsQuery.graphql';
+// Lib
 import paths from '../../lib/paths';
 
 interface UpdateTodoFormData {
   description?: string;
   title: string;
 }
+
+interface Props extends UpdateTodoFormData {}
+
 const validationSchema = yup.object().shape({
   title: yup.string().required('Title is required'),
 });
 
-const UpdatePage = () => {
+const UpdatePage: NextPage<Props> = (props) => {
+  console.log(props);
   const router = useRouter();
-  const { id } = router.query;
-
-  const { loading, error, data } = useQuery<
-    TodoItemQueryData,
-    TodoItemQueryVariables
-  >(TodoItemQuery, {
-    variables: {
-      id: id as string,
-    },
-  });
-
   const {
-    register,
     handleSubmit,
     formState: { errors },
+    control,
   } = useForm<UpdateTodoFormData>({
-    defaultValues: data?.TodoItem,
+    defaultValues: {
+      description: props.description,
+      title: props.title,
+    },
     resolver: yupResolver(validationSchema),
   });
 
-  console.log(data);
-  const [formState, setFormState] = useState<UpdateTodoFormData>({
-    description: data?.TodoItem?.description,
-    title: data?.TodoItem?.title,
-  });
-  console.log(formState);
+  const { id } = router.query;
 
   const [updateTodo] = useMutation<
     UpdateTodoItemMutationData,
@@ -123,56 +115,70 @@ const UpdatePage = () => {
       })
       .catch((error) => console.log(error));
   };
-  const renderContent = () => {
-    if (loading) {
-      return <Loading />;
-    }
-    if (data.TodoItem) {
-      return (
-        <Container disableGutters maxWidth="md">
-          <Box bgcolor={Color.WHITE} borderRadius="8px" height="80vh" mt={4}>
-            <Box display="flex" justifyContent="flex-end" p={2}>
-              <IconButton href={paths.home.href}>
-                <CloseIcon />
-              </IconButton>
-            </Box>
-            <form onSubmit={handleSubmit(onSubmitSave)}>
-              <Container maxWidth="sm">
-                <Box p={2}>
-                  <Grid container spacing={3}>
-                    <Grid item xs={12}>
-                      <Typography customColor={Color.JET}>
-                        Give your task a title:
-                      </Typography>
-                      {errors?.title && (
-                        <Typography
-                          customColor={Color.WARNING}
-                        >{`Error: ${errors?.title?.message}`}</Typography>
-                      )}
 
-                      <TextField
-                        fullWidth
-                        error={!!errors?.title ?? false}
-                        value={formState?.title}
-                        {...register('title')}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Typography customColor={Color.JET}>
-                        About this task:
-                      </Typography>
-                      <TextField
-                        fullWidth
-                        multiline
-                        maxRows={14}
-                        minRows={10}
-                        value={formState?.description}
-                        {...register('description')}
-                      />
-                    </Grid>
+  const renderContent = () => {
+    return (
+      <Container disableGutters maxWidth="md">
+        <Box bgcolor={Color.WHITE} borderRadius="8px" minHeight="680px" mt={4}>
+          <Box display="flex" justifyContent="flex-end" p={2}>
+            <IconButton href={paths.home.href}>
+              <CloseIcon />
+            </IconButton>
+          </Box>
+          <form onSubmit={handleSubmit(onSubmitSave)}>
+            <Container maxWidth="sm">
+              <Box p={2}>
+                <Grid container spacing={3}>
+                  <Grid item xs={12}>
+                    <Typography customColor={Color.JET}>
+                      Give your task a title:
+                    </Typography>
+                    {errors?.title && (
+                      <Typography
+                        customColor={Color.WARNING}
+                      >{`Error: ${errors?.title?.message}`}</Typography>
+                    )}
+                    {/* Controller takes care of the registration process. */}
+                    <Controller
+                      control={control}
+                      name="title"
+                      render={({ field: { onChange, onBlur, value } }) => (
+                        <TextField
+                          fullWidth
+                          defaultValue={props.title}
+                          error={!!errors?.title ?? false}
+                          value={value}
+                          onBlur={onBlur}
+                          onChange={onChange}
+                        />
+                      )}
+                    />
                   </Grid>
-                </Box>
-              </Container>
+                  <Grid item xs={12}>
+                    <Typography customColor={Color.JET}>
+                      About this task:
+                    </Typography>
+                    <Controller
+                      control={control}
+                      name="description"
+                      render={({ field: { onChange, onBlur, value } }) => (
+                        <TextField
+                          fullWidth
+                          multiline
+                          defaultValue={props.description}
+                          maxRows={14}
+                          minRows={10}
+                          value={value}
+                          onBlur={onBlur}
+                          onChange={onChange}
+                        />
+                      )}
+                    />
+                  </Grid>
+                </Grid>
+              </Box>
+            </Container>
+            <Box>
               <Container maxWidth="xs">
                 <Grid container justifyContent="center" spacing={1}>
                   <Grid item>
@@ -207,14 +213,51 @@ const UpdatePage = () => {
                     </Button>
                   </Grid>
                 </Grid>
-                <Box p={2}></Box>
               </Container>
-            </form>
-          </Box>
-        </Container>
-      );
-    }
+            </Box>
+          </form>
+        </Box>
+      </Container>
+    );
   };
   return <Template pageName={'Edit Task'}>{renderContent()}</Template>;
 };
+
+const getServerSideProps: GetServerSideProps = async (context) => {
+  // We have to use this as we are requesting data on server side
+  const client = new ApolloClient({
+    cache: new InMemoryCache(),
+    link: createHttpLink({
+      credentials: 'same-origin',
+      uri: 'http://localhost:4000/api/graphql',
+    }),
+    ssrMode: true,
+  });
+
+  const { data, error } = await client.query<
+    TodoItemQueryData,
+    TodoItemQueryVariables
+  >({
+    query: TodoItemQuery,
+    variables: {
+      id: context?.params?.id as string,
+    },
+  });
+
+  if (data && data.TodoItem) {
+    return {
+      props: { ...data.TodoItem },
+    };
+  }
+
+  if (error) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return { props: {} };
+};
+
 export default UpdatePage;
+export { getServerSideProps };

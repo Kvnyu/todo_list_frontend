@@ -2,10 +2,12 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 // Providers
 import { ThemeProvider } from '@material-ui/core';
+// MUI
+import CssBaseline from '@material-ui/core/CssBaseline';
 // Styles
 import '../theme/css/styles.css';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from '../theme/theme';
+
 // InMemoryCache is used to cache query results after fetching them
 const client = new ApolloClient({
   cache: new InMemoryCache(),

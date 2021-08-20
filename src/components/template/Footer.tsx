@@ -2,8 +2,6 @@ import React, { FC } from 'react';
 // MUI
 import Box from '@material-ui/core/Box';
 
-export const footerHeight = '136px';
-
 const Footer: FC = () => {
   return (
     <Box
@@ -14,10 +12,10 @@ const Footer: FC = () => {
         backgroundRepeat: 'repeat-x',
         bottom: 0,
         display: 'block',
-        height: footerHeight,
+        height: '128px',
         left: 0,
         opacity: '15%',
-        position: 'absolute',
+        position: 'fixed',
         width: '100%',
       }}
     />

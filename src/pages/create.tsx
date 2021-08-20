@@ -17,15 +17,16 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '../theme/overrides/Typography';
 // Components
 import Template from '../components/template/Template';
-// Components
-import { Color } from '../theme/theme';
 import TextField from '../theme/overrides/TextField';
-// Lib
+// GraphQL
 import { useMutation } from '@apollo/client/react';
 import CreateTodoItemMutation, {
   CreateTodoItemMutationData,
   CreateTodoItemMutationVariables,
 } from '../lib/graphql/mutation/CreateTodoListMutation.graphql';
+// Styles
+import { Color } from '../theme/theme';
+// Lib
 import paths from '../lib/paths';
 
 interface CreateTodoFormData {
@@ -72,8 +73,8 @@ const CreatePage: FC = () => {
   return (
     <Template pageName="Create new task">
       <Container disableGutters maxWidth="md">
-        <Box bgcolor={Color.WHITE} borderRadius="8px" height="80vh" mt={4}>
-          <Box display="flex" justifyContent="flex-end" p={4}>
+        <Box bgcolor={Color.WHITE} borderRadius="8px" minHeight="720px" mt={2}>
+          <Box display="flex" justifyContent="flex-end" p={2}>
             <IconButton href={paths.home.href}>
               <CloseIcon />
             </IconButton>
