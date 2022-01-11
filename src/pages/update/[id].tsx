@@ -45,7 +45,7 @@ interface UpdateTodoFormData {
   title: string;
 }
 
-interface Props extends UpdateTodoFormData { }
+interface Props extends UpdateTodoFormData {}
 
 const validationSchema = yup.object().shape({
   title: yup.string().required('Title is required'),

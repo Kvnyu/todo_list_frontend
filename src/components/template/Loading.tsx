@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 // Modules
-import Image from 'next/Image';
+import Image from 'next/image';
 // MUI
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';

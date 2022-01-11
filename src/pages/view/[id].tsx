@@ -44,7 +44,7 @@ interface ViewTodoData {
   title: string;
 }
 
-interface Props extends ViewTodoData { }
+interface Props extends ViewTodoData {}
 
 const ViewPage: NextPage<Props> = (serverProps) => {
   const router = useRouter();
@@ -88,7 +88,7 @@ const ViewPage: NextPage<Props> = (serverProps) => {
           id: router.query.id as string,
         },
       },
-    }).then(() => { });
+    }).then(() => {});
   };
 
   return (

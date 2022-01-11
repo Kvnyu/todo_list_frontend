@@ -16,7 +16,8 @@ import paths from '../../lib/paths';
 
 interface Props {
   // This shouldn't be void but the type for HTMLInputElement is missing in this env
-  handleCheckboxClick: (event: any) => void;
+  // eslint-disable-next-line no-unused-vars
+  handleCheckboxClick: (_event: any) => void;
   items: Item[];
 }
 
