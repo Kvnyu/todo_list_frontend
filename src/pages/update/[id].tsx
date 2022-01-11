@@ -45,7 +45,7 @@ interface UpdateTodoFormData {
   title: string;
 }
 
-interface Props extends UpdateTodoFormData {}
+interface Props extends UpdateTodoFormData { }
 
 const validationSchema = yup.object().shape({
   title: yup.string().required('Title is required'),
@@ -229,7 +229,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
     cache: new InMemoryCache(),
     link: createHttpLink({
       credentials: 'same-origin',
-      uri: 'http://localhost:4000/api/graphql',
+      uri: process.env.NEXT_PUBLIC_API_URL,
     }),
     ssrMode: true,
   });

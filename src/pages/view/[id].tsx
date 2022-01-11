@@ -44,7 +44,7 @@ interface ViewTodoData {
   title: string;
 }
 
-interface Props extends ViewTodoData {}
+interface Props extends ViewTodoData { }
 
 const ViewPage: NextPage<Props> = (serverProps) => {
   const router = useRouter();
@@ -88,7 +88,7 @@ const ViewPage: NextPage<Props> = (serverProps) => {
           id: router.query.id as string,
         },
       },
-    }).then(() => {});
+    }).then(() => { });
   };
 
   return (
@@ -162,7 +162,7 @@ const getServerSideProps: GetServerSideProps = async (context) => {
     cache: new InMemoryCache(),
     link: createHttpLink({
       credentials: 'same-origin',
-      uri: 'http://localhost:4000/api/graphql',
+      uri: process.env.NEXT_PUBLIC_API_URL,
     }),
     ssrMode: true,
   });

@@ -11,7 +11,7 @@ import theme from '../theme/theme';
 // InMemoryCache is used to cache query results after fetching them
 const client = new ApolloClient({
   cache: new InMemoryCache(),
-  uri: 'http://localhost:4000/api/graphql',
+  uri: process.env.NEXT_PUBLIC_API_URL,
 });
 
 // Is this a higher order component ?
